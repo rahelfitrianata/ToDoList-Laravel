@@ -1,0 +1,31 @@
+.form-container {
+    margin-left: 500px !important;
+    margin-right: 15px;
+    min-width: 200px;
+}
+
+/* Tambahkan border-radius ke input form */
+.input-rounded {
+    border-radius: 50px; /* Bisa diubah sesuai selera */
+    padding: 12px; /* Padding agar lebih nyaman */
+    background: #D9D9D9;
+    color: rgb(255, 255, 255);
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Efek saat input difokuskan */
+.input-rounded:focus {
+    border-color: #a855f7; /* Warna ungu sesuai tema */
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.6); /* Glow efek */
+}
+
+.btn-register {
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.form-edit {
+    width: 70%;
+}
