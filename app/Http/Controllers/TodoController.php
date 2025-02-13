@@ -5,16 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Carbon\Carbon;
+use App\Models\AssignmentHistory;
 
 class TodoController extends Controller
 {
     public function index()
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get()->groupBy(function($task) {
-            return Carbon::parse($task->created_at)->translatedFormat('d/m/Y'); // Format: "12 Februari 2025"
-        });
-    
-        return view('dashboard', compact('tasks'));
+        $today = Carbon::today();
+
+        // Ambil tugas yang dibuat hari ini
+        $tasksToday = Task::whereDate('created_at', $today)->get();
+
+        // Pindahkan tugas sebelum hari ini ke Assignment History
+        $oldTasks = Task::whereDate('created_at', '<', $today)->get();
+
+        foreach ($oldTasks as $task) {
+            AssignmentHistory::create([
+                'title' => $task->title,
+                'status' => $task->status,
+                'created_at' => $task->created_at,
+            ]);
+
+            // Hapus dari tabel tasks
+            $task->delete();
+        }
+
+        return view('dashboard', [
+            'tasks' => $tasksToday,
+            'date' => $today->format('d/m/Y'), // Format tanggal untuk dashboard
+        ]);
     }
 
     public function store(Request $request)
@@ -88,14 +107,17 @@ class TodoController extends Controller
     
     public function indexAssignment()
     {
-        // Ambil tugas yang statusnya "Completed"
-        $assignments = Task::whereDate('created_at', Carbon::today())
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->groupBy(function ($task) {
-                return $task->created_at->format('Y-m-d'); // Grup berdasarkan tanggal pembuatan
-            });
+        // Ambil tugas hari ini dari tabel tasks
+        $tasks = Task::whereDate('created_at', Carbon::today())->get();
 
-        return view('assignment-history', compact('assignments'));
+        // Ambil tugas kemarin dari tabel assignment_histories
+        $assignmentHistories = AssignmentHistory::whereDate('created_at', '<', Carbon::today())
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+                        ->groupBy(function ($assignment) {
+                            return Carbon::parse($assignment->created_at)->toDateString();
+                        });
+
+        return view('assignment-history', compact('tasks', 'assignmentHistories'));
     }
 }

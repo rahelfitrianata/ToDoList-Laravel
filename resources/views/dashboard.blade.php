@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do List Rachel</title>
+    <title>To Do List Rachel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="{{ asset('logo.ico') }}" type="image/x-icon">
 </head>
@@ -12,11 +12,15 @@
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">To Do List</h1>
-            <a href="{{ route('assignment.history') }}" class="px-4 py-2 bg-purple-500 text-white rounded">
-                Assignment History
-            </a>
+            <div class="flex items-center space-x-4">
+                <span class="text-gray-500 font-semibold">{{ $date }}</span> <!-- Tanggal di ujung kanan -->
+                <a href="{{ route('assignment.history') }}" class="px-4 py-2 bg-purple-500 text-white rounded">
+                    Assignment History
+                </a>
+            </div>
         </div>
 
+        <!-- Tombol Tambah Tugas -->
         <form action="{{ route('tasks.store') }}" method="POST" class="mb-4 flex">
             @csrf
             <input type="hidden" name="status" value="Pending">
@@ -24,11 +28,11 @@
                 +
             </a>
         </form>
-@if ($tasks->isNotEmpty())
-        @foreach ($tasks as $date => $taskGroup)
-            <h2 class="text-gray-500 font-semibold mt-4">{{ $date }}</h2> <!-- Menampilkan tanggal -->
+
+        <!-- Menampilkan tugas hanya untuk hari ini -->
+        @if ($tasks->isNotEmpty())
             <ul>
-                @foreach ($taskGroup as $task)
+                @foreach ($tasks as $task)
                     <li class="flex justify-between items-center bg-gray-200 p-3 mb-2 rounded">
                         <span class="flex items-center">
                             <span class="mr-2 {{ $task->status == 'Completed' ? 'text-green-500' : 'text-red-500' }}">
@@ -43,23 +47,22 @@
                     </li>
                 @endforeach
             </ul>
-        @endforeach
-    @else
-        <p class="text-gray-600 text-center mt-4">No tasks available.</p>
-    @endif
+        @else
+            <p class="text-gray-600 text-center mt-4">No tasks available.</p>
+        @endif
 
-    <form action="{{ route('logout') }}" method="POST" class="mt-4">
-        @csrf
-        <button type="submit" class="w-full bg-red-500 text-white p-2 rounded">Logout</button>
-    </form>
-</div>
+        <!-- Tombol Logout -->
+        <form action="{{ route('logout') }}" method="POST" class="mt-4">
+            @csrf
+            <button type="submit" class="w-full bg-red-500 text-white p-2 rounded">Logout</button>
+        </form>
+    </div>
 
     <script>
         function confirmDelete(event) {
-            event.preventDefault(); // Mencegah form langsung submit
-
+            event.preventDefault();
             if (confirm("Are you sure to delete this task?")) {
-                event.target.submit(); // Submit form jika user menekan "OK"
+                event.target.submit();
             }
         }
     </script>
