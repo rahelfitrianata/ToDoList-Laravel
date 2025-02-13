@@ -9,8 +9,7 @@
     <link rel="icon" href="{{ asset('logo.ico') }}" type="image/x-icon">
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
-
-    <!-- Popup Delete -->
+    
     <div x-data="{ openModal: true }" x-show="openModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
             <h2 class="text-lg font-semibold mb-4">Are you sure to delete this task?</h2>

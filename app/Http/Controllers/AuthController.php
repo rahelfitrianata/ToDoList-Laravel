@@ -21,7 +21,7 @@ class AuthController extends Controller
     User::create([
         'username' => $request->username,
         'email' => $request->email,
-        'password' => Hash::make($request->password), // Hash password sebelum disimpan
+        'password' => Hash::make($request->password),
     ]);
 
     return redirect()->route('login')->with('success', 'Account created successfully!');
@@ -41,4 +41,12 @@ class AuthController extends Controller
     return back()->withErrors(['username' => 'Invalid credentials']);
     }
     
+    public function logout(Request $request)
+    {
+        Auth::logout(); 
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken(); 
+
+        return redirect('/login');
+    }
 }

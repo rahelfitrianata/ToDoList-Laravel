@@ -9,9 +9,8 @@ class Task extends Model
 {
     use HasFactory;
 
-    // Izinkan mass assignment
     protected $fillable = [
-        'title',  // Pastikan sesuai dengan nama kolom di database
+        'title', 
         'status',
     ];
 }

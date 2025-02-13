@@ -4,20 +4,19 @@
     min-width: 200px;
 }
 
-/* Tambahkan border-radius ke input form */
 .input-rounded {
-    border-radius: 50px; /* Bisa diubah sesuai selera */
-    padding: 12px; /* Padding agar lebih nyaman */
+    border-radius: 50px; 
+    padding: 12px; 
     background: #D9D9D9;
     color: rgb(255, 255, 255);
     outline: none;
     transition: all 0.3s ease-in-out;
 }
 
-/* Efek saat input difokuskan */
+
 .input-rounded:focus {
-    border-color: #a855f7; /* Warna ungu sesuai tema */
-    box-shadow: 0 0 8px rgba(168, 85, 247, 0.6); /* Glow efek */
+    border-color: #a855f7; 
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.6); 
 }
 
 .btn-register {

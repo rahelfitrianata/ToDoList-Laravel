@@ -13,14 +13,13 @@
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">To Do List</h1>
             <div class="flex items-center space-x-4">
-                <span class="text-gray-500 font-semibold">{{ $date }}</span> <!-- Tanggal di ujung kanan -->
+                <span class="text-gray-500 font-semibold">{{ $date }}</span>
                 <a href="{{ route('assignment.history') }}" class="px-4 py-2 bg-purple-500 text-white rounded">
                     Assignment History
                 </a>
             </div>
         </div>
 
-        <!-- Tombol Tambah Tugas -->
         <form action="{{ route('tasks.store') }}" method="POST" class="mb-4 flex">
             @csrf
             <input type="hidden" name="status" value="Pending">
@@ -29,7 +28,6 @@
             </a>
         </form>
 
-        <!-- Menampilkan tugas hanya untuk hari ini -->
         @if ($tasks->isNotEmpty())
             <ul>
                 @foreach ($tasks as $task)
@@ -51,7 +49,6 @@
             <p class="text-gray-600 text-center mt-4">No tasks available.</p>
         @endif
 
-        <!-- Tombol Logout -->
         <form action="{{ route('logout') }}" method="POST" class="mt-4">
             @csrf
             <button type="submit" class="w-full bg-red-500 text-white p-2 rounded">Logout</button>

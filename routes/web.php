@@ -13,10 +13,8 @@ Route::get('/dashboard', [TodoController::class, 'index'])->name('dashboard')->m
 Route::post('/tasks', [TodoController::class, 'store'])->name('tasks.store');
 Route::put('/tasks/{task}', [TodoController::class, 'update'])->name('tasks.update');
 Route::delete('/tasks/{task}', [TodoController::class, 'destroy'])->name('tasks.destroy');
-Route::post('/logout', function () {
-    auth()->logout();
-    return redirect('/login');
-})->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 Route::get('/tasks/create', [TodoController::class, 'create'])->name('tasks.create');
 Route::post('/tasks', [TodoController::class, 'store'])->name('tasks.store');

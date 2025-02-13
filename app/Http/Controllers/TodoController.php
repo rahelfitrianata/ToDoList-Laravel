@@ -13,10 +13,8 @@ class TodoController extends Controller
     {
         $today = Carbon::today();
 
-        // Ambil tugas yang dibuat hari ini
         $tasksToday = Task::whereDate('created_at', $today)->get();
 
-        // Pindahkan tugas sebelum hari ini ke Assignment History
         $oldTasks = Task::whereDate('created_at', '<', $today)->get();
 
         foreach ($oldTasks as $task) {
@@ -26,13 +24,12 @@ class TodoController extends Controller
                 'created_at' => $task->created_at,
             ]);
 
-            // Hapus dari tabel tasks
             $task->delete();
         }
 
         return view('dashboard', [
             'tasks' => $tasksToday,
-            'date' => $today->format('d/m/Y'), // Format tanggal untuk dashboard
+            'date' => $today->format('d/m/Y'), 
         ]);
     }
 
@@ -107,10 +104,8 @@ class TodoController extends Controller
     
     public function indexAssignment()
     {
-        // Ambil tugas hari ini dari tabel tasks
         $tasks = Task::whereDate('created_at', Carbon::today())->get();
 
-        // Ambil tugas kemarin dari tabel assignment_histories
         $assignmentHistories = AssignmentHistory::whereDate('created_at', '<', Carbon::today())
                         ->orderBy('created_at', 'desc')
                         ->get()

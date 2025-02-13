@@ -10,13 +10,11 @@
 <body class="bg-gray-100 p-6">
 
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <!-- Header -->
         <div class="flex items-center mb-4">
             <a href="{{ route('dashboard') }}" class="text-xl font-bold">&larr;</a>
             <h1 class="text-2xl font-bold text-center flex-1">Assignment History</h1>
         </div>
 
-        <!-- Tampilkan Tugas Hari Ini -->
         <div class="mb-6">
             <h2 class="text-gray-500 text-sm font-semibold">{{ \Carbon\Carbon::today()->format('d/m/Y') }}</h2>
             @if ($tasks->isNotEmpty())
@@ -37,7 +35,6 @@
             @endif
         </div>
 
-        <!-- Tampilkan Tugas Kemarin (Assignment History) -->
         @foreach ($assignmentHistories as $date => $assignments)
             <div class="mb-4">
                 <h2 class="text-gray-500 text-sm font-semibold">{{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}</h2>
