@@ -15,7 +15,6 @@ Route::put('/tasks/{task}', [TodoController::class, 'update'])->name('tasks.upda
 Route::delete('/tasks/{task}', [TodoController::class, 'destroy'])->name('tasks.destroy');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
 Route::get('/tasks/create', [TodoController::class, 'create'])->name('tasks.create');
 Route::post('/tasks', [TodoController::class, 'store'])->name('tasks.store');
 Route::get('/tasks/{task}/edit', [TodoController::class, 'edit'])->name('tasks.edit');
